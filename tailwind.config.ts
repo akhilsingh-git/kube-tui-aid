@@ -52,6 +52,21 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				terminal: {
+					bg: 'hsl(var(--terminal-bg))',
+					text: 'hsl(var(--terminal-text))',
+					accent: 'hsl(var(--terminal-accent))',
+					success: 'hsl(var(--terminal-success))',
+					warning: 'hsl(var(--terminal-warning))',
+					error: 'hsl(var(--terminal-error))',
+					muted: 'hsl(var(--terminal-muted))'
+				},
+				status: {
+					running: 'hsl(var(--status-running))',
+					pending: 'hsl(var(--status-pending))',
+					failed: 'hsl(var(--status-failed))',
+					succeeded: 'hsl(var(--status-succeeded))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
