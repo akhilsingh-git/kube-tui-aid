@@ -14,6 +14,47 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_analysis_cache: {
+        Row: {
+          analysis_result: Json
+          analysis_type: string
+          cluster_id: string
+          confidence_score: number | null
+          created_at: string
+          expires_at: string
+          id: string
+          input_hash: string
+        }
+        Insert: {
+          analysis_result: Json
+          analysis_type: string
+          cluster_id: string
+          confidence_score?: number | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          input_hash: string
+        }
+        Update: {
+          analysis_result?: Json
+          analysis_type?: string
+          cluster_id?: string
+          confidence_score?: number | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          input_hash?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_analysis_cache_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "cluster_configs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cluster_configs: {
         Row: {
           certificate_authority_data: string | null
@@ -115,6 +156,110 @@ export type Database = {
           },
         ]
       }
+      event_correlations: {
+        Row: {
+          affected_resources: Json | null
+          cluster_id: string
+          confidence_score: number | null
+          correlation_id: string
+          correlation_type: string
+          created_at: string
+          id: string
+          primary_event_id: string
+          related_event_ids: string[]
+          root_cause_analysis: string | null
+        }
+        Insert: {
+          affected_resources?: Json | null
+          cluster_id: string
+          confidence_score?: number | null
+          correlation_id: string
+          correlation_type: string
+          created_at?: string
+          id?: string
+          primary_event_id: string
+          related_event_ids: string[]
+          root_cause_analysis?: string | null
+        }
+        Update: {
+          affected_resources?: Json | null
+          cluster_id?: string
+          confidence_score?: number | null
+          correlation_id?: string
+          correlation_type?: string
+          created_at?: string
+          id?: string
+          primary_event_id?: string
+          related_event_ids?: string[]
+          root_cause_analysis?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_correlations_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "cluster_configs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_correlations_primary_event_id_fkey"
+            columns: ["primary_event_id"]
+            isOneToOne: false
+            referencedRelation: "cluster_events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      intelligent_suggestions: {
+        Row: {
+          action_steps: Json
+          ai_confidence: number | null
+          alert_id: string
+          created_at: string
+          description: string
+          estimated_impact: string | null
+          id: string
+          implementation_difficulty: string | null
+          priority: number
+          suggestion_type: string
+          title: string
+        }
+        Insert: {
+          action_steps: Json
+          ai_confidence?: number | null
+          alert_id: string
+          created_at?: string
+          description: string
+          estimated_impact?: string | null
+          id?: string
+          implementation_difficulty?: string | null
+          priority: number
+          suggestion_type: string
+          title: string
+        }
+        Update: {
+          action_steps?: Json
+          ai_confidence?: number | null
+          alert_id?: string
+          created_at?: string
+          description?: string
+          estimated_impact?: string | null
+          id?: string
+          implementation_difficulty?: string | null
+          priority?: number
+          suggestion_type?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "intelligent_suggestions_alert_id_fkey"
+            columns: ["alert_id"]
+            isOneToOne: false
+            referencedRelation: "smart_alerts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       kubectl_logs: {
         Row: {
           cluster_id: string
@@ -202,6 +347,53 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "pod_health_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "cluster_configs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pod_restart_trends: {
+        Row: {
+          avg_restart_interval: unknown | null
+          cluster_id: string
+          created_at: string
+          id: string
+          namespace: string
+          pod_name: string
+          restart_count: number
+          time_window: string
+          trend_direction: string
+          trend_score: number | null
+        }
+        Insert: {
+          avg_restart_interval?: unknown | null
+          cluster_id: string
+          created_at?: string
+          id?: string
+          namespace: string
+          pod_name: string
+          restart_count: number
+          time_window: string
+          trend_direction: string
+          trend_score?: number | null
+        }
+        Update: {
+          avg_restart_interval?: unknown | null
+          cluster_id?: string
+          created_at?: string
+          id?: string
+          namespace?: string
+          pod_name?: string
+          restart_count?: number
+          time_window?: string
+          trend_direction?: string
+          trend_score?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pod_restart_trends_cluster_id_fkey"
             columns: ["cluster_id"]
             isOneToOne: false
             referencedRelation: "cluster_configs"

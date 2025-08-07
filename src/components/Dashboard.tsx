@@ -9,6 +9,7 @@ import { LogViewer } from "./LogViewer";
 import { Terminal } from "./Terminal";
 import { ClusterConfig } from "./ClusterConfig";
 import { SmartAlerts } from "./SmartAlerts";
+import { TrendAnalysis } from "./TrendAnalysis";
 import { useAuth } from "@/hooks/useAuth";
 
 const Dashboard = () => {
@@ -53,9 +54,10 @@ const Dashboard = () => {
       
       <div className="max-w-7xl mx-auto p-6">
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5 bg-terminal-highlight/20">
+          <TabsList className="grid w-full grid-cols-6 bg-terminal-highlight/20">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="alerts">Smart Alerts</TabsTrigger>
+            <TabsTrigger value="trends">AI Analysis</TabsTrigger>
             <TabsTrigger value="pods">Pods</TabsTrigger>
             <TabsTrigger value="logs">Logs</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
@@ -170,6 +172,10 @@ const Dashboard = () => {
           
           <TabsContent value="logs">
             <LogViewer />
+          </TabsContent>
+          
+          <TabsContent value="trends">
+            <TrendAnalysis />
           </TabsContent>
           
           <TabsContent value="settings">

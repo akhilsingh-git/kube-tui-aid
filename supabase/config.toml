@@ -5,3 +5,6 @@ verify_jwt = true
 
 [functions.monitor-clusters]
 verify_jwt = false
+
+[functions.intelligent-analysis]
+verify_jwt = false
