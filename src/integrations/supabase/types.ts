@@ -53,6 +53,68 @@ export type Database = {
         }
         Relationships: []
       }
+      cluster_events: {
+        Row: {
+          cluster_id: string
+          count: number | null
+          created_at: string
+          event_uid: string
+          first_timestamp: string | null
+          id: string
+          kind: string
+          last_timestamp: string | null
+          message: string
+          name: string
+          namespace: string
+          reason: string
+          source_component: string | null
+          source_host: string | null
+          type: string
+        }
+        Insert: {
+          cluster_id: string
+          count?: number | null
+          created_at?: string
+          event_uid: string
+          first_timestamp?: string | null
+          id?: string
+          kind: string
+          last_timestamp?: string | null
+          message: string
+          name: string
+          namespace: string
+          reason: string
+          source_component?: string | null
+          source_host?: string | null
+          type: string
+        }
+        Update: {
+          cluster_id?: string
+          count?: number | null
+          created_at?: string
+          event_uid?: string
+          first_timestamp?: string | null
+          id?: string
+          kind?: string
+          last_timestamp?: string | null
+          message?: string
+          name?: string
+          namespace?: string
+          reason?: string
+          source_component?: string | null
+          source_host?: string | null
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cluster_events_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "cluster_configs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       kubectl_logs: {
         Row: {
           cluster_id: string
@@ -91,6 +153,62 @@ export type Database = {
           },
         ]
       }
+      pod_health: {
+        Row: {
+          cluster_id: string
+          container_name: string | null
+          created_at: string
+          exit_code: number | null
+          exit_reason: string | null
+          id: string
+          last_restart_time: string | null
+          namespace: string
+          oom_killed: boolean | null
+          pod_name: string
+          restart_count: number | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          cluster_id: string
+          container_name?: string | null
+          created_at?: string
+          exit_code?: number | null
+          exit_reason?: string | null
+          id?: string
+          last_restart_time?: string | null
+          namespace: string
+          oom_killed?: boolean | null
+          pod_name: string
+          restart_count?: number | null
+          status: string
+          updated_at?: string
+        }
+        Update: {
+          cluster_id?: string
+          container_name?: string | null
+          created_at?: string
+          exit_code?: number | null
+          exit_reason?: string | null
+          id?: string
+          last_restart_time?: string | null
+          namespace?: string
+          oom_killed?: boolean | null
+          pod_name?: string
+          restart_count?: number | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pod_health_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "cluster_configs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
@@ -114,6 +232,71 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      smart_alerts: {
+        Row: {
+          alert_type: string
+          cluster_id: string
+          created_at: string
+          description: string
+          id: string
+          is_resolved: boolean | null
+          namespace: string | null
+          related_events: Json | null
+          resolved_at: string | null
+          resource_name: string
+          resource_type: string
+          severity: string
+          suggestion: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          alert_type: string
+          cluster_id: string
+          created_at?: string
+          description: string
+          id?: string
+          is_resolved?: boolean | null
+          namespace?: string | null
+          related_events?: Json | null
+          resolved_at?: string | null
+          resource_name: string
+          resource_type: string
+          severity: string
+          suggestion?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          alert_type?: string
+          cluster_id?: string
+          created_at?: string
+          description?: string
+          id?: string
+          is_resolved?: boolean | null
+          namespace?: string | null
+          related_events?: Json | null
+          resolved_at?: string | null
+          resource_name?: string
+          resource_type?: string
+          severity?: string
+          suggestion?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "smart_alerts_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "cluster_configs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

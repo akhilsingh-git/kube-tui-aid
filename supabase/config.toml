@@ -2,3 +2,6 @@ project_id = "iejeszcdlpfgoufcjumj"
 
 [functions.kubectl]
 verify_jwt = true
+
+[functions.monitor-clusters]
+verify_jwt = false
