@@ -1,18 +1,13 @@
-# Welcome to your Lovable project
+# Welcome to KubeDebug
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/acb608e5-57cd-4412-9318-d633f4881d65
+**URL**: https://kube-tui-aid.lovable.app/
 
 ## How can I edit this code?
 
 There are several ways of editing your application.
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/acb608e5-57cd-4412-9318-d633f4881d65) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
 
 **Use your preferred IDE**
 
