@@ -54,7 +54,7 @@ export function CollaborationDashboard() {
   
   // State for Slack configuration
   const [slackWebhooks, setSlackWebhooks] = useState<SlackWebhook[]>([]);
-  const [newWebhook, setNewWebhook] = useState({ webhook_url: '', channel_name: '', cluster_id: '' });
+  const [newWebhook, setNewWebhook] = useState({ webhook_url: '', channel_name: '', cluster_id: 'all' });
   
   // State for notification preferences
   const [notificationPrefs, setNotificationPrefs] = useState<NotificationPreference[]>([]);
@@ -66,7 +66,7 @@ export function CollaborationDashboard() {
     description: '',
     severity: 'medium',
     assigned_to: '',
-    cluster_id: ''
+    cluster_id: 'select'
   });
   
   // State for clusters
@@ -158,7 +158,7 @@ export function CollaborationDashboard() {
           user_id: user?.id,
           webhook_url: newWebhook.webhook_url,
           channel_name: newWebhook.channel_name,
-          cluster_id: newWebhook.cluster_id || null,
+          cluster_id: newWebhook.cluster_id === "all" ? null : newWebhook.cluster_id,
           enabled: true
         });
 
@@ -169,7 +169,7 @@ export function CollaborationDashboard() {
         description: "Slack webhook added successfully",
       });
 
-      setNewWebhook({ webhook_url: '', channel_name: '', cluster_id: '' });
+      setNewWebhook({ webhook_url: '', channel_name: '', cluster_id: 'all' });
       fetchSlackWebhooks();
     } catch (error) {
       console.error('Error adding slack webhook:', error);
@@ -232,7 +232,7 @@ export function CollaborationDashboard() {
   };
 
   const createIncident = async () => {
-    if (!newIncident.title || !newIncident.cluster_id) {
+    if (!newIncident.title || !newIncident.cluster_id || newIncident.cluster_id === 'select') {
       toast({
         title: "Error",
         description: "Please fill in required fields",
@@ -267,7 +267,7 @@ export function CollaborationDashboard() {
         description: "Incident created successfully",
       });
 
-      setNewIncident({ title: '', description: '', severity: 'medium', assigned_to: '', cluster_id: '' });
+      setNewIncident({ title: '', description: '', severity: 'medium', assigned_to: '', cluster_id: 'select' });
       fetchIncidents();
     } catch (error) {
       console.error('Error creating incident:', error);
@@ -410,12 +410,12 @@ export function CollaborationDashboard() {
                 </div>
                 <div>
                   <Label htmlFor="cluster-select">Cluster (Optional)</Label>
-                  <Select value={newWebhook.cluster_id} onValueChange={(value) => setNewWebhook({ ...newWebhook, cluster_id: value })}>
+                  <Select value={newWebhook.cluster_id || "all"} onValueChange={(value) => setNewWebhook({ ...newWebhook, cluster_id: value === "all" ? "" : value })}>
                     <SelectTrigger>
                       <SelectValue placeholder="All clusters" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All clusters</SelectItem>
+                      <SelectItem value="all">All clusters</SelectItem>
                       {clusters.map((cluster) => (
                         <SelectItem key={cluster.id} value={cluster.id}>
                           {cluster.name}
@@ -537,6 +537,7 @@ export function CollaborationDashboard() {
                       <SelectValue placeholder="Select cluster" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="select">Select cluster</SelectItem>
                       {clusters.map((cluster) => (
                         <SelectItem key={cluster.id} value={cluster.id}>
                           {cluster.name}
