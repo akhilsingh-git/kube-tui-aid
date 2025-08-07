@@ -156,6 +156,118 @@ export type Database = {
           },
         ]
       }
+      cluster_health_scores: {
+        Row: {
+          calculated_at: string
+          cluster_id: string
+          cpu_score: number
+          created_at: string
+          disk_score: number
+          healthy_nodes: number
+          healthy_pods: number
+          id: string
+          memory_score: number
+          network_score: number
+          node_count: number
+          overall_score: number
+          pod_health_score: number
+          total_pods: number
+        }
+        Insert: {
+          calculated_at?: string
+          cluster_id: string
+          cpu_score: number
+          created_at?: string
+          disk_score: number
+          healthy_nodes: number
+          healthy_pods: number
+          id?: string
+          memory_score: number
+          network_score: number
+          node_count: number
+          overall_score: number
+          pod_health_score: number
+          total_pods: number
+        }
+        Update: {
+          calculated_at?: string
+          cluster_id?: string
+          cpu_score?: number
+          created_at?: string
+          disk_score?: number
+          healthy_nodes?: number
+          healthy_pods?: number
+          id?: string
+          memory_score?: number
+          network_score?: number
+          node_count?: number
+          overall_score?: number
+          pod_health_score?: number
+          total_pods?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cluster_health_scores_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "cluster_configs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cluster_metrics: {
+        Row: {
+          cluster_id: string
+          created_at: string
+          id: string
+          labels: Json | null
+          metric_name: string
+          metric_type: string
+          namespace: string | null
+          node_name: string | null
+          resource_name: string | null
+          timestamp: string
+          unit: string | null
+          value: number
+        }
+        Insert: {
+          cluster_id: string
+          created_at?: string
+          id?: string
+          labels?: Json | null
+          metric_name: string
+          metric_type: string
+          namespace?: string | null
+          node_name?: string | null
+          resource_name?: string | null
+          timestamp?: string
+          unit?: string | null
+          value: number
+        }
+        Update: {
+          cluster_id?: string
+          created_at?: string
+          id?: string
+          labels?: Json | null
+          metric_name?: string
+          metric_type?: string
+          namespace?: string | null
+          node_name?: string | null
+          resource_name?: string | null
+          timestamp?: string
+          unit?: string | null
+          value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cluster_metrics_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "cluster_configs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       event_correlations: {
         Row: {
           affected_resources: Json | null
@@ -298,6 +410,68 @@ export type Database = {
           },
         ]
       }
+      monitoring_alerts: {
+        Row: {
+          acknowledged: boolean | null
+          alert_type: string
+          cluster_id: string
+          created_at: string
+          current_value: number
+          id: string
+          message: string
+          node_name: string | null
+          resolved: boolean | null
+          resolved_at: string | null
+          resource_name: string | null
+          severity: string
+          threshold_value: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          acknowledged?: boolean | null
+          alert_type: string
+          cluster_id: string
+          created_at?: string
+          current_value: number
+          id?: string
+          message: string
+          node_name?: string | null
+          resolved?: boolean | null
+          resolved_at?: string | null
+          resource_name?: string | null
+          severity: string
+          threshold_value: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          acknowledged?: boolean | null
+          alert_type?: string
+          cluster_id?: string
+          created_at?: string
+          current_value?: number
+          id?: string
+          message?: string
+          node_name?: string | null
+          resolved?: boolean | null
+          resolved_at?: string | null
+          resource_name?: string | null
+          severity?: string
+          threshold_value?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "monitoring_alerts_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "cluster_configs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pod_health: {
         Row: {
           cluster_id: string
@@ -424,6 +598,53 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      prometheus_targets: {
+        Row: {
+          auth_token: string | null
+          cluster_id: string
+          created_at: string
+          enabled: boolean | null
+          endpoint: string
+          id: string
+          last_scrape_at: string | null
+          name: string
+          scrape_interval: number | null
+          updated_at: string
+        }
+        Insert: {
+          auth_token?: string | null
+          cluster_id: string
+          created_at?: string
+          enabled?: boolean | null
+          endpoint: string
+          id?: string
+          last_scrape_at?: string | null
+          name: string
+          scrape_interval?: number | null
+          updated_at?: string
+        }
+        Update: {
+          auth_token?: string | null
+          cluster_id?: string
+          created_at?: string
+          enabled?: boolean | null
+          endpoint?: string
+          id?: string
+          last_scrape_at?: string | null
+          name?: string
+          scrape_interval?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prometheus_targets_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "cluster_configs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       smart_alerts: {
         Row: {

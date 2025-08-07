@@ -10,6 +10,7 @@ import { Terminal } from "./Terminal";
 import { ClusterConfig } from "./ClusterConfig";
 import { SmartAlerts } from "./SmartAlerts";
 import { TrendAnalysis } from "./TrendAnalysis";
+import { ClusterHealthDashboard } from "./ClusterHealthDashboard";
 import { useAuth } from "@/hooks/useAuth";
 
 const Dashboard = () => {
@@ -54,9 +55,10 @@ const Dashboard = () => {
       
       <div className="max-w-7xl mx-auto p-6">
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6 bg-terminal-highlight/20">
+          <TabsList className="grid w-full grid-cols-7 bg-terminal-highlight/20">
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="alerts">Smart Alerts</TabsTrigger>
+            <TabsTrigger value="health">Health</TabsTrigger>
+            <TabsTrigger value="alerts">Alerts</TabsTrigger>
             <TabsTrigger value="trends">AI Analysis</TabsTrigger>
             <TabsTrigger value="pods">Pods</TabsTrigger>
             <TabsTrigger value="logs">Logs</TabsTrigger>
@@ -160,6 +162,10 @@ const Dashboard = () => {
                 </Card>
               </div>
             </div>
+          </TabsContent>
+          
+          <TabsContent value="health">
+            <ClusterHealthDashboard />
           </TabsContent>
           
           <TabsContent value="alerts">
