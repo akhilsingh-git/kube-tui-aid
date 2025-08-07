@@ -14,7 +14,107 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      cluster_configs: {
+        Row: {
+          certificate_authority_data: string | null
+          created_at: string
+          endpoint: string
+          id: string
+          is_active: boolean | null
+          name: string
+          namespace: string | null
+          token: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          certificate_authority_data?: string | null
+          created_at?: string
+          endpoint: string
+          id?: string
+          is_active?: boolean | null
+          name: string
+          namespace?: string | null
+          token: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          certificate_authority_data?: string | null
+          created_at?: string
+          endpoint?: string
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          namespace?: string | null
+          token?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      kubectl_logs: {
+        Row: {
+          cluster_id: string
+          command: string
+          error: string | null
+          executed_at: string
+          id: string
+          output: string | null
+          user_id: string
+        }
+        Insert: {
+          cluster_id: string
+          command: string
+          error?: string | null
+          executed_at?: string
+          id?: string
+          output?: string | null
+          user_id: string
+        }
+        Update: {
+          cluster_id?: string
+          command?: string
+          error?: string | null
+          executed_at?: string
+          id?: string
+          output?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "kubectl_logs_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "cluster_configs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
