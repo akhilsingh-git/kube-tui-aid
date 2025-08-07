@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.prometheus-monitor]
 verify_jwt = false
+
+[functions.slack-integration]
+verify_jwt = true

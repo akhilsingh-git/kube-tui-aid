@@ -322,6 +322,60 @@ export type Database = {
           },
         ]
       }
+      incident_timelines: {
+        Row: {
+          affected_resources: Json | null
+          assigned_to: string | null
+          cluster_id: string
+          created_at: string
+          id: string
+          incident_description: string | null
+          incident_title: string
+          resolved_at: string | null
+          severity: string
+          slack_thread_ts: string | null
+          started_at: string
+          status: string
+          timeline_events: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          affected_resources?: Json | null
+          assigned_to?: string | null
+          cluster_id: string
+          created_at?: string
+          id?: string
+          incident_description?: string | null
+          incident_title: string
+          resolved_at?: string | null
+          severity: string
+          slack_thread_ts?: string | null
+          started_at?: string
+          status?: string
+          timeline_events?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          affected_resources?: Json | null
+          assigned_to?: string | null
+          cluster_id?: string
+          created_at?: string
+          id?: string
+          incident_description?: string | null
+          incident_title?: string
+          resolved_at?: string | null
+          severity?: string
+          slack_thread_ts?: string | null
+          started_at?: string
+          status?: string
+          timeline_events?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       intelligent_suggestions: {
         Row: {
           action_steps: Json
@@ -471,6 +525,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      notification_preferences: {
+        Row: {
+          channel_config: Json
+          cluster_id: string | null
+          created_at: string
+          enabled: boolean
+          id: string
+          notification_type: string
+          severity_threshold: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          channel_config?: Json
+          cluster_id?: string | null
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          notification_type: string
+          severity_threshold?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          channel_config?: Json
+          cluster_id?: string | null
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          notification_type?: string
+          severity_threshold?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       pod_health: {
         Row: {
@@ -645,6 +735,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      slack_webhooks: {
+        Row: {
+          channel_name: string
+          cluster_id: string | null
+          created_at: string
+          enabled: boolean
+          id: string
+          updated_at: string
+          user_id: string
+          webhook_url: string
+        }
+        Insert: {
+          channel_name: string
+          cluster_id?: string | null
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          updated_at?: string
+          user_id: string
+          webhook_url: string
+        }
+        Update: {
+          channel_name?: string
+          cluster_id?: string | null
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          updated_at?: string
+          user_id?: string
+          webhook_url?: string
+        }
+        Relationships: []
       }
       smart_alerts: {
         Row: {

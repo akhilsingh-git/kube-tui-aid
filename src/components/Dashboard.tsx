@@ -11,6 +11,7 @@ import { ClusterConfig } from "./ClusterConfig";
 import { SmartAlerts } from "./SmartAlerts";
 import { TrendAnalysis } from "./TrendAnalysis";
 import { ClusterHealthDashboard } from "./ClusterHealthDashboard";
+import { CollaborationDashboard } from "./CollaborationDashboard";
 import { useAuth } from "@/hooks/useAuth";
 
 const Dashboard = () => {
@@ -55,11 +56,12 @@ const Dashboard = () => {
       
       <div className="max-w-7xl mx-auto p-6">
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-7 bg-terminal-highlight/20">
+          <TabsList className="grid w-full grid-cols-8 bg-terminal-highlight/20">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="health">Health</TabsTrigger>
             <TabsTrigger value="alerts">Alerts</TabsTrigger>
             <TabsTrigger value="trends">AI Analysis</TabsTrigger>
+            <TabsTrigger value="collaboration">Collaboration</TabsTrigger>
             <TabsTrigger value="pods">Pods</TabsTrigger>
             <TabsTrigger value="logs">Logs</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
@@ -182,6 +184,10 @@ const Dashboard = () => {
           
           <TabsContent value="trends">
             <TrendAnalysis />
+          </TabsContent>
+          
+          <TabsContent value="collaboration">
+            <CollaborationDashboard />
           </TabsContent>
           
           <TabsContent value="settings">
