@@ -1,12 +1,17 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Activity, Server, Database, AlertTriangle } from "lucide-react";
+import { Settings, LogOut, User, Activity, Server, Database, AlertTriangle } from "lucide-react";
 import { PodsList } from "./PodsList";
 import { LogViewer } from "./LogViewer";
 import { Terminal } from "./Terminal";
+import { ClusterConfig } from "./ClusterConfig";
+import { useAuth } from "@/hooks/useAuth";
 
 const Dashboard = () => {
+  const { user, signOut } = useAuth();
   const clusterStats = {
     nodes: 3,
     pods: 24,
@@ -21,24 +26,43 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold terminal-glow">KubeDebug</h1>
-            <p className="text-muted-foreground">Kubernetes Cluster Debug Console</p>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="flex items-center space-x-1">
-              <div className="w-2 h-2 bg-status-running rounded-full animate-pulse"></div>
-              <span className="text-sm text-status-running">Connected</span>
+    <div className="min-h-screen bg-terminal-bg text-terminal-text">
+      <div className="border-b border-terminal-border bg-terminal-bg/80 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold text-terminal-primary">KubeDebug Dashboard</h1>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 text-sm text-terminal-dim">
+                <User className="h-4 w-4" />
+                <span>{user?.email}</span>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => signOut()}
+                className="border-terminal-border hover:bg-terminal-highlight/10"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Sign Out
+              </Button>
             </div>
           </div>
         </div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto p-6">
+        <Tabs defaultValue="overview" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-4 bg-terminal-highlight/20">
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="pods">Pods</TabsTrigger>
+            <TabsTrigger value="logs">Logs</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="overview" className="space-y-6">
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card className="terminal-border bg-card">
             <CardContent className="flex items-center justify-between p-4">
               <div>
@@ -80,10 +104,10 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Pods List */}
-          <div className="space-y-4">
+            {/* Main Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Pods List */}
+              <div className="space-y-4">
             <Card className="terminal-border bg-card">
               <CardHeader>
                 <CardTitle className="text-primary">Cluster Pods</CardTitle>
@@ -119,29 +143,33 @@ const Dashboard = () => {
             </Card>
           </div>
 
-          {/* Right Column */}
-          <div className="space-y-4">
-            {/* Log Viewer */}
-            <Card className="terminal-border bg-card">
-              <CardHeader>
-                <CardTitle className="text-primary">Live Logs</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <LogViewer />
-              </CardContent>
-            </Card>
-
-            {/* Terminal */}
-            <Card className="terminal-border bg-card">
-              <CardHeader>
-                <CardTitle className="text-terminal-accent">kubectl Terminal</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Terminal />
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+              {/* Right Column */}
+              <div className="space-y-4">
+                {/* Log Viewer */}
+                <Card className="terminal-border bg-card">
+                  <CardHeader>
+                    <CardTitle className="text-primary">Live Logs</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <LogViewer />
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="pods">
+            <PodsList />
+          </TabsContent>
+          
+          <TabsContent value="logs">
+            <LogViewer />
+          </TabsContent>
+          
+          <TabsContent value="settings">
+            <ClusterConfig />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
